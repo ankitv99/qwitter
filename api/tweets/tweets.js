@@ -18,9 +18,9 @@ const addTweet = async (req, res, next) => {
         }
 
 
-        await models.userBook.create({
-            userName: foundUser.id,
-            tweet: require.body.tweet
+        await models.tweets.create({
+            userId: foundUser.id,
+            tweet: req.body.tweet
 
         }, { transaction: t })
         await t.commit()
@@ -38,7 +38,7 @@ const addTweet = async (req, res, next) => {
 
 const getTweet = async (req, res, next) => {
     try {
-        const data = await models.userTweet.findAll({
+        const data = await models.tweets.findAll({
             include: [
 
                 {
