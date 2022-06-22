@@ -17,7 +17,6 @@ const addTweet = async (req, res, next) => {
 
         }
 
-
         await models.tweets.create({
             userId: foundUser.id,
             tweet: req.body.tweet
@@ -51,6 +50,9 @@ const getTweet = async (req, res, next) => {
         next(error)
     }
 }
+
+
+    
 
 module.exports = { addTweet, getTweet }
 
