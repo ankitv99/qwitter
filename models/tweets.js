@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   tweets.init({
     userId: DataTypes.INTEGER,
-    tweet: DataTypes.STRING
+    tweet: DataTypes.STRING,
+    likeCount: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'tweets',
