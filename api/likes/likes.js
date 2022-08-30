@@ -8,9 +8,26 @@ const likes = async (req, res, next) => {
                 id: req.body.tweetId
             }
         })
-        tweet.set({
-            likeCount: tweet.likeCount ? tweet.likeCount + 1 : 1
+        const isAlreadyLikedByUser = await models.likes.findOne({
+            where: {
+                userId: req.body.userId,
+                tweetId: req.body.tweetId
+            }
         })
+        if(isAlreadyLikedByUser){
+            tweet.set({
+                likeCount: tweet.likeCount - 1
+            })
+            await isAlreadyLikedByUser.destroy()
+        } else {
+            tweet.set({
+                likeCount: tweet.likeCount ? tweet.likeCount + 1 : 1
+            })
+            await models.likes.create({
+                userId: req.body.userId,
+                tweetId: req.body.tweetId
+            })
+        }
         await tweet.save()
         res.json({
             success: true
