@@ -8,7 +8,8 @@ const addUser = async (req, res, next) => {
             firstName: Joi.string().min(2).required(),
             lastName: Joi.string().min(2).required(),
             email: Joi.string().email().min(2).required(),
-            userName: Joi.string().min(2).required()
+            userName: Joi.string().min(2).required(),
+            password: Joi.string().min(6).max(20).required()
         })
         await schema.validateAsync(req.body)
 
@@ -16,7 +17,8 @@ const addUser = async (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            userName: req.body.userName
+            userName: req.body.userName,
+            password: req.body.password
         }
         await models.User.create(data)
         res.json({
@@ -80,7 +82,7 @@ const deleteUser = async (req, res, next) => {
             }
         })
         res.json({
-            result
+            success: true
         })
     } catch (error) {
         next(error)
