@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       tweets.belongsTo(models.User, {foreignKey: 'userId'})
       tweets.hasMany(models.likes, {foreignKey: 'tweetId'})
+      tweets.hasMany(models.comments, {foreignKey: 'tweetId'})
     }
   }
   tweets.init({
