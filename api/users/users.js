@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const models = require('../../models')
+const bcrypt = require('bcrypt')
 
 
 const addUser = async (req, res, next) => {
@@ -92,11 +93,43 @@ const deleteUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        const foundUser = 
-    } catch (error) {
+        const foundUser = await models.User.findOne({
+            where: {
+                userName: req.body.userName
+            }
+        })
+        if (foundUser){
+            const matched = await bcrypt.compare(req.body.password, foundUser.password)
+                
+            if (matched) {
+                res.json({
+                    success: true
+                })
+            }
+                else {
+                    res.json({
+                        success: false
+                    })
+                }
+
+        }
+        else {
+            res.json({
+                message: "User Not Found"
+            })
+        }
         
+       
+
+    }
+
+    catch (error) {
+        next(error)
+
     }
 }
+
+
 
 
 // Login
@@ -109,6 +142,7 @@ module.exports = {
     addUser,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    login
 }
 
