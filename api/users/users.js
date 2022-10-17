@@ -131,13 +131,6 @@ const login = async (req, res, next) => {
 
 
 
-
-// Login
-
-// username, password from postman
-// search user via username
-// bcrypt compare, (foundUser.password, req.body.password)
-
 module.exports = {
     addUser,
     getUser,
